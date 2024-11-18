@@ -8,7 +8,7 @@ click==8.1.7
 cryptography==42.0.5
 ecdsa==0.18.0
 exceptiongroup==1.2.0
-fastapi==0.120.0  # Updated version
+fastapi==0.115.5  # Updated version
 gunicorn==22.0.0
 h11==0.14.0
 httpcore==1.0.5
