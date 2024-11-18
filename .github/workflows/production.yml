@@ -75,13 +75,26 @@ jobs:
         run: |
           curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
 
-      # Download DB only in the first run, no skip-db-update
-      - name: Download Trivy DB
+      # Retry logic for downloading the Trivy DB
+      - name: Retry Download Trivy DB
         run: |
-          mkdir -p ~/.cache/trivy
-          trivy image --download-db-only
+          MAX_RETRIES=5
+          RETRY_INTERVAL=5
+          RETRIES=0
+          while [ $RETRIES -lt $MAX_RETRIES ]; do
+            mkdir -p ~/.cache/trivy
+            trivy image --download-db-only
+            if [ $? -eq 0 ]; then
+              echo "Trivy DB download succeeded"
+              break
+            else
+              RETRIES=$((RETRIES + 1))
+              echo "Trivy DB download failed. Retrying in $RETRY_INTERVAL seconds..."
+              sleep $RETRY_INTERVAL
+            fi
+          done
 
-      # Scan the Docker image after DB is downloaded (no skip-db-update here)
+      # Scan the Docker image after DB is downloaded
       - name: Scan the Docker image with Trivy
         run: |
           trivy image saisrinivas194/homework9:latest --format table --exit-code 1 --ignore-unfixed --severity CRITICAL,HIGH
