@@ -85,4 +85,4 @@ jobs:
 
       - name: Scan the Docker image
         run: |
-          trivy image --skip-update saisrinivas194/homework9:latest --format table --exit-code 1 --ignore-unfixed --severity CRITICAL,HIGH
+          trivy image saisrinivas194/homework9:latest --skip-update --format table --exit-code 1 --ignore-unfixed --severity CRITICAL,HIGH
