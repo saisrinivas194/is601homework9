@@ -74,6 +74,7 @@ jobs:
       - name: Download Trivy DB
         run: |
           mkdir -p ~/.cache/trivy
+          curl -sfL https://github.com/aquasecurity/trivy/releases/download/v0.34.0/trivy_0.34.0_Linux-x86_64.tar.gz | tar -xzv -C /usr/local/bin trivy
           trivy image --download-db-only
       
       - name: Set up Trivy
