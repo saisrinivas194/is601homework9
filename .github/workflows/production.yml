@@ -75,13 +75,13 @@ jobs:
         run: |
           curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
 
-      # First run: download Trivy DB (this step will trigger DB download if not already cached)
+      # Ensure DB is downloaded first
       - name: Download Trivy DB
         run: |
           mkdir -p ~/.cache/trivy
-          trivy image --download-db-only
+          trivy image --download-db-only --skip-db-update
 
+      # Scan the Docker image after DB is downloaded
       - name: Scan the Docker image with Trivy
         run: |
-          # Skip DB update if DB is already downloaded
           trivy image saisrinivas194/homework9:latest --skip-db-update --format table --exit-code 1 --ignore-unfixed --severity CRITICAL,HIGH
