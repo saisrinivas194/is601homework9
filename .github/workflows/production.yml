@@ -76,14 +76,9 @@ jobs:
           mkdir -p ~/.cache/trivy
           trivy image --download-db-only
       
-      - name: Scan the Docker image
+      - name: Set up Trivy
         uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: 'saisrinivas194/homework9:latest'
-          format: 'table'
-          exit-code: '1'
-          ignore-unfixed: true
-          severity: 'CRITICAL,HIGH'
-          skip-setup-trivy: true
-        run: trivy image --skip-update saisrinivas194/homework9:latest
 
+      - name: Scan the Docker image
+        run: |
+          trivy image --skip-update saisrinivas194/homework9:latest --format table --exit-code 1 --ignore-unfixed --severity CRITICAL,HIGH
