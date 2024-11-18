@@ -58,3 +58,12 @@ To set up this project on your local machine:
 DOCKERHUB_USERNAME
 DOCKERHUB_TOKEN
 3. Ensure your requirements.txt file lists the required dependencies for your project.
+
+Secrets Configuration
+You need to configure the following GitHub Secrets in the repository:
+
+DOCKERHUB_USERNAME: Your DockerHub username.
+DOCKERHUB_TOKEN: A personal access token from DockerHub with permissions to push images.
+
+Conclusion
+This setup ensures a robust CI/CD pipeline with automated testing, secure image builds, and vulnerability scanning, streamlining your development workflow.
