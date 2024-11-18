@@ -57,13 +57,13 @@ jobs:
         with:
           context: .
           push: true
-          tags: saisrinivas194/homework8:latest  # Tag to use for DockerHub repository
+          tags: saisrinivas194/homework9:latest  # Tag to use for DockerHub repository
           platforms: linux/amd64  # Define specific platforms if needed
           
       - name: Scan the Docker image
         uses: aquasecurity/trivy-action@master  # Use the latest version for Trivy
         with:
-          image-ref: 'saisrinivas194/homework8:latest'
+          image-ref: 'saisrinivas194/homework9:latest'
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true
