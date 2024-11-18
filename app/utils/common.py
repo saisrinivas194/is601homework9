@@ -66,11 +66,11 @@ def encode_url_to_filename(url):
     Encodes a URL into a base64 string safe for filenames, after validating and sanitizing.
     Removes padding to ensure filename compatibility.
     """
-    sanitized_url = validate_and_sanitize_url(str(url))  # Fixed typo here
+    sanitized_url = validate_and_sanitize_url(str(url))
     if sanitized_url is None:
         raise ValueError("Provided URL is invalid and cannot be encoded.")
-    encoded_bytes = base64.urlsafe_b64encode(sanitized_url.encode('utf-8'))  # Base64 encoding
-    encoded_str = encoded_bytes.decode('utf-8').rstrip('=')  # Remove padding for filenames
+    encoded_bytes = base64.urlsafe_b64encode(sanitized_url.encode('utf-8'))
+    encoded_str = encoded_bytes.decode('utf-8').rstrip('=')
     return encoded_str
 
 def decode_filename_to_url(encoded_str: str) -> str:
@@ -81,7 +81,7 @@ def decode_filename_to_url(encoded_str: str) -> str:
     padding_needed = 4 - (len(encoded_str) % 4)
     if padding_needed:
         encoded_str += "=" * padding_needed
-    decoded_bytes = base64.urlsafe_b64decode(encoded_str)  # Fixed typo here
+    decoded_bytes = base64.urlsafe_b64decode(encoded_str)
     return decoded_bytes.decode('utf-8')
 
 def generate_links(action: str, qr_filename: str, base_api_url: str, download_url: str) -> List[dict]:
@@ -91,7 +91,7 @@ def generate_links(action: str, qr_filename: str, base_api_url: str, download_ur
     """
     links = []
     if action in ["list", "create"]:
-        original_url = decode_filename_to_url(qr_filename[:-4])  # Assuming '.png' suffix
+        original_url = decode_filename_to_url(qr_filename[:-4])
         links.append({"rel": "view", "href": download_url, "action": "GET", "type": "image/png"})
     if action in ["list", "create", "delete"]:
         delete_url = f"{base_api_url}/qr-codes/{qr_filename}"
